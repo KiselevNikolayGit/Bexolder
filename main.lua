@@ -1,3 +1,18 @@
+size = 50
+love.window.setMode(size, size, {fullscreen = true})
+w, h = love.window.getMode()
+scale = h / size
+trans = (w - (size * scale)) / 2
+
+function love.graphics.fit()
+  love.graphics.translate(trans, 0)
+  love.graphics.scale(scale, scale)
+end
+
+function love.graphics.drawf(im, x, y, r, s)
+  love.graphics.draw(im, size * x, size * y, r, s, s, im:getWidth() / 2, im:getHeight() / 2)
+end
+
 function rgb(...)
   local rngnb = {...}
   return rngnb
@@ -26,6 +41,11 @@ function job.paint(im, colors)
 end
 
 function love.load()
-  print("started love.load of main.lua")
-  love.filesystem.load("animate.lua")()
+  print("! started main.lua !")
+  -- love.filesystem.load("animate.lua")()
+  love.filesystem.load("demo.lua")()
+end
+
+function love.wheelmoved()
+  love.event.quit()
 end

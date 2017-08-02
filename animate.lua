@@ -1,4 +1,4 @@
-print("runned animate.lua")
+print("! started animate.lua !")
 rframe = 1
 a = {}
 for i = 1, 5 do
