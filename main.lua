@@ -1,7 +1,7 @@
 -- COPYRIGHT: KISELEV NIKOLAY
 -- Licence: MIT
 -- Bexolder
--- Version: 0.0.0.5
+-- Version: 0.0.1.0
 
 fur = {w = 1500, h = 750}
 turnin = {0, 0}
@@ -90,7 +90,7 @@ function fit()
 end
 
 function love.graphics.paradraw(im, x, y, z)
-	love.graphics.draw(im, x + turnin[1] * (z / 10), y + turnin[2] * (z / 10), 0, 1, 1, ded:getWidth() / 2, ded:getHeight() / 2)
+	love.graphics.draw(im, x + turnin[1] * (z / 10), y + turnin[2] * (z / 10), 0, 1, 1, im:getWidth() / 2, im:getHeight() / 2)
 end
 
 love.window.setMode(2, 1, {fullscreen = true})
@@ -113,16 +113,20 @@ if love.filesystem.exists("main.ttf") then
 end
 
 ded = love.graphics.newImage("ded.png")
+mn = love.graphics.newImage("img/mn.png")
+cl = love.graphics.newImage("img/cl.png")
+fr = love.graphics.newImage("img/fr.png")
+hm = love.graphics.newImage("img/hm.png")
 
 function love.keypressed(key)
 	if key == "3" then
 		love.window.setMode(2, 1, {borderless = true, fullscreen = true})
 		fit()
 	elseif key == "5" then
-		love.window.setMode(600, 300, {borderless = false, fullscreen = false})
+		love.window.setMode(300, 300, {borderless = false, fullscreen = false})
 		fit()
 	elseif key == "4" then
-		love.window.setMode(300, 150, {borderless = true, fullscreen = false})
+		love.window.setMode(600, 300, {borderless = true, fullscreen = false})
 		fit()
 	end
 end
@@ -189,8 +193,18 @@ function love.draw()
 	love.graphics.translate(t[1], t[2])
 	love.graphics.setLineStyle("smooth")
 	love.graphics.setLineWidth(1)
+	-- love.graphics.setColor(hc("#506844"))
+	-- love.graphics.paradraw(ded, 1200, 375, 7)
+	love.graphics.setColor(hc("#8c7c68"))
+	love.graphics.paradraw(mn, 850, 400, -5)
+	love.graphics.setColor(hc("#c4c8c4"))
+	love.graphics.paradraw(cl, 1000, 250, -2)
+	love.graphics.setColor(hc("#285438"))	
+	love.graphics.paradraw(fr, 1000, 425, 4)
+	love.graphics.setColor(hc("#c4bca8"))
+	love.graphics.paradraw(hm, 700, 450, 7)
 	love.graphics.setFont(aqua[1])
-	love.graphics.setColor(hc("#d0d4c4"))	
+	love.graphics.setColor(hc("#d0d4c4"))
 	love.graphics.print("Bexolder", 45 + turnin[1], 110 + turnin[2])
 	love.graphics.setFont(aqua[2])
 	love.graphics.setColor(menc[1])
@@ -201,8 +215,6 @@ function love.draw()
 	love.graphics.setFont(aqua[4])
 	love.graphics.setColor(menc[3])	
 	love.graphics.print("Exit", 50 + turnin[1], 620 + turnin[2])
-	love.graphics.setColor(hc("#506844"))
-	love.graphics.paradraw(ded, 1200, 375, 7)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(mesh, meshp.x1, meshp.y1)
 	love.graphics.draw(mesh, meshp.x2, meshp.y2)
