@@ -1,7 +1,7 @@
 -- COPYRIGHT: KISELEV NIKOLAY
 -- Licence: MIT
 -- Bexolder
--- Version: 0.0.0.4
+-- Version: 0.0.0.5
 
 fur = {w = 1500, h = 750}
 turnin = {0, 0}
