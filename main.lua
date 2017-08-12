@@ -3,10 +3,6 @@
 -- Bexolder
 -- Version: 0.0.0.4
 
-love.window.setTitle("Bexolder")
-logo = love.graphics.newImage("lg.png")
-love.window.setIcon(logo:getData())
-
 fur = {w = 1500, h = 750}
 turnin = {0, 0}
 
@@ -41,8 +37,8 @@ function fit()
 		backimg:setFilter("nearest")
 		local w, h = love.window.getMode()
 		local iw, ih = backimg:getDimensions()
-		iw = (iw / s) * 5
-		ih = (ih / s) * 5
+		iw = (iw / s) * 3
+		ih = (ih / s) * 3
 		if w / fur.w < h / fur.h then
 			side = t[2]
 			fortouch = {0, side}
@@ -93,10 +89,19 @@ function fit()
 		end
 end
 
+function love.graphics.paradraw(im, x, y, z)
+	love.graphics.draw(im, x + turnin[1] * (z / 10), y + turnin[2] * (z / 10), 0, 1, 1, ded:getWidth() / 2, ded:getHeight() / 2)
+end
+
 love.window.setMode(2, 1, {fullscreen = true})
+love.window.setTitle("Bexolder")
+logo = love.graphics.newImage("lg.png")
+love.window.setIcon(logo:getData())
+fit()
+
 love.graphics.setDefaultFilter("linear")
-love.graphics.setBackgroundColor(hc("#081c14"))
-menc = {{hc("#d0d4c4")}, {hc("#d0d4c4")}, {hc("#d0d4c4")}}
+love.graphics.setBackgroundColor(hc("#000000"))
+menc = {{hc("#8c9880")}, {hc("#8c9880")}, {hc("#8c9880")}}
 if love.filesystem.exists("main.ttf") then
 	aqua = {
 		love.graphics.newFont("main.ttf", 170),
@@ -106,7 +111,6 @@ if love.filesystem.exists("main.ttf") then
 		love.graphics.newFont("main.ttf", 40)
 	}
 end
-fit()
 
 ded = love.graphics.newImage("ded.png")
 
@@ -125,11 +129,11 @@ end
 
 function love.mousepressed(x, y)
 	x, y = fixmou(x, y)
-	if x > 0.03 and x < 0.25 and y > 0.3 and y < 0.55 then
+	if x > 0.01 and x < 0.23 and y > 0.3 and y < 0.55 then
 		ostart()
-	elseif x > 0.03 and x < 0.15 and y > 0.55 and y < 0.7 then
+	elseif x > 0.01 and x < 0.13 and y > 0.55 and y < 0.7 then
 		oelse()
-	elseif x > 0.03 and x < 0.12 and y > 0.8 and y < 0.95 then
+	elseif x > 0.01 and x < 0.1 and y > 0.8 and y < 0.95 then
 		oexit()
 	end
 end
@@ -138,17 +142,17 @@ function love.update(dt)
 	x, y = fixmou(love.mouse.getX(), love.mouse.getY())
 	if x ~= 2 and y ~= 2 then
 		turnin = {(x - 0.5) * 50, (y - 0.5) * 30}
-		if x > 0.03 and x < 0.25 and y > 0.3 and y < 0.55 then
+		if x > 0.01 and x < 0.23 and y > 0.3 and y < 0.55 then
 			menc[1] = {hc("#d0d4c4")}
 		else
 			menc[1] = {hc("#8c9880")}
 		end
-		if x > 0.03 and x < 0.15 and y > 0.55 and y < 0.7 then
+		if x > 0.01 and x < 0.13 and y > 0.55 and y < 0.7 then
 			menc[2] = {hc("#d0d4c4")}
 		else
 			menc[2] = {hc("#8c9880")}
 		end
-		if x > 0.03 and x < 0.12 and y > 0.8 and y < 0.95 then
+		if x > 0.01 and x < 0.1 and y > 0.8 and y < 0.95 then
 			menc[3] = {hc("#d0d4c4")}
 		else
 			menc[3] = {hc("#8c9880")}
@@ -187,18 +191,18 @@ function love.draw()
 	love.graphics.setLineWidth(1)
 	love.graphics.setFont(aqua[1])
 	love.graphics.setColor(hc("#d0d4c4"))	
-	love.graphics.print("Bexolder", 70 + turnin[1], 110 + turnin[2])
+	love.graphics.print("Bexolder", 45 + turnin[1], 110 + turnin[2])
 	love.graphics.setFont(aqua[2])
-	love.graphics.setColor(menc[1])	
-	love.graphics.print("Start", 70 + turnin[1], 300 + turnin[2])
+	love.graphics.setColor(menc[1])
+	love.graphics.print("Start", 46 + turnin[1], 300 + turnin[2])
 	love.graphics.setFont(aqua[3])
 	love.graphics.setColor(menc[2])	
-	love.graphics.print("Else", 70 + turnin[1], 440 + turnin[2])
+	love.graphics.print("Else", 50 + turnin[1], 440 + turnin[2])
 	love.graphics.setFont(aqua[4])
 	love.graphics.setColor(menc[3])	
-	love.graphics.print("Exit", 70 + turnin[1], 620 + turnin[2])
-	love.graphics.setColor(hc("#acb09c"))
-	love.graphics.draw(ded, 1000 + turnin[1], turnin[2])
+	love.graphics.print("Exit", 50 + turnin[1], 620 + turnin[2])
+	love.graphics.setColor(hc("#506844"))
+	love.graphics.paradraw(ded, 1200, 375, 7)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(mesh, meshp.x1, meshp.y1)
 	love.graphics.draw(mesh, meshp.x2, meshp.y2)
