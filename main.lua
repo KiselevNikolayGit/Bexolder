@@ -1,10 +1,62 @@
 -- COPYRIGHT: KISELEV NIKOLAY
 -- Licence: MIT
 -- Bexolder
--- Version: 0.0.1.0
+-- Version: 0.0.1.3
 
 fur = {w = 1500, h = 750}
 turnin = {0, 0}
+if musicplay == nil then musicplay = true end
+
+Source = love.audio.newSource("mou/PACEFULL_NIGHT.mp3", "static")
+Source:setLooping(true)
+if musicplay then
+	love.audio.play(Source)
+end
+
+function love.arch(readyarch)
+	if readyarch == nil then
+		arch = {}
+		arch[2] = love.draw
+		love.draw = nil
+		arch[6] = love.keypressed
+		love.keypressed = nil
+		arch[7] = love.keyreleased
+		love.keyreleased = nil
+		arch[10] = love.mousefocus
+		love.mousefocus = nil
+		arch[11] = love.mousemoved
+		love.mousemoved = nil
+		arch[12] = love.mousepressed
+		love.mousepressed = nil
+		arch[13] = love.mousereleased
+		love.mousereleased = nil
+		arch[14] = love.quit
+		love.quit = nil
+		arch[17] = love.textedited
+		love.textedited = nil
+		arch[18] = love.textinput
+		love.textinput = nil
+		arch[23] = love.update
+		love.update = nil
+		arch[25] = love.wheelmove
+		love.wheelmove = nil
+		return arch
+	else
+		love.draw = readyarch[2]
+		love.keypressed = readyarch[6]
+		love.keyreleased = readyarch[7]
+		love.load = readyarch[8]
+		love.mousefocus = readyarch[10]
+		love.mousemoved = readyarch[11]
+		love.mousepressed = readyarch[12]
+		love.mousereleased = readyarch[13]
+		love.quit = readyarch[14]
+		love.textedited = readyarch[17]
+		love.textinput = readyarch[18]
+		love.update = readyarch[23]
+		love.wheelmove = readyarch[25]
+	end
+end
 
 function fixmou(x, y)
 	local w, h = love.window.getMode()
@@ -101,6 +153,7 @@ fit()
 
 love.graphics.setDefaultFilter("linear")
 love.graphics.setBackgroundColor(hc("#000000"))
+love.arch()
 menc = {{hc("#8c9880")}, {hc("#8c9880")}, {hc("#8c9880")}}
 if love.filesystem.exists("main.ttf") then
 	aqua = {
@@ -112,7 +165,6 @@ if love.filesystem.exists("main.ttf") then
 	}
 end
 
-ded = love.graphics.newImage("ded.png")
 mn = love.graphics.newImage("img/mn.png")
 cl = love.graphics.newImage("img/cl.png")
 fr = love.graphics.newImage("img/fr.png")
@@ -128,16 +180,18 @@ function love.keypressed(key)
 	elseif key == "4" then
 		love.window.setMode(600, 300, {borderless = true, fullscreen = false})
 		fit()
+	elseif key == "escape" then
+		pause()
 	end
 end
 
 function love.mousepressed(x, y)
 	x, y = fixmou(x, y)
-	if x > 0.01 and x < 0.23 and y > 0.3 and y < 0.55 then
+	if x > 0.02 and x < 0.235 and y > 0.3 and y < 0.55 then
 		ostart()
-	elseif x > 0.01 and x < 0.13 and y > 0.55 and y < 0.7 then
+	elseif x > 0.02 and x < 0.15 and y > 0.55 and y < 0.7 then
 		oelse()
-	elseif x > 0.01 and x < 0.1 and y > 0.8 and y < 0.95 then
+	elseif x > 0.02 and x < 0.13 and y > 0.8 and y < 0.95 then
 		oexit()
 	end
 end
@@ -145,18 +199,18 @@ end
 function love.update(dt)
 	x, y = fixmou(love.mouse.getX(), love.mouse.getY())
 	if x ~= 2 and y ~= 2 then
-		turnin = {(x - 0.5) * 50, (y - 0.5) * 30}
-		if x > 0.01 and x < 0.23 and y > 0.3 and y < 0.55 then
+		turnin = {(x - 0.5) * 15, (y - 0.5) * 10}
+		if x > 0.02 and x < 0.235 and y > 0.3 and y < 0.55 then
 			menc[1] = {hc("#d0d4c4")}
 		else
 			menc[1] = {hc("#8c9880")}
 		end
-		if x > 0.01 and x < 0.13 and y > 0.55 and y < 0.7 then
+		if x > 0.02 and x < 0.15 and y > 0.55 and y < 0.7 then
 			menc[2] = {hc("#d0d4c4")}
 		else
 			menc[2] = {hc("#8c9880")}
 		end
-		if x > 0.01 and x < 0.1 and y > 0.8 and y < 0.95 then
+		if x > 0.02 and x < 0.13 and y > 0.8 and y < 0.95 then
 			menc[3] = {hc("#d0d4c4")}
 		else
 			menc[3] = {hc("#8c9880")}
@@ -177,15 +231,81 @@ function oexit()
 end
 
 function pause()
-	local screen = love.draw
-	local mousen = love.mousepressed
-	local updatn = love.update
-	function love.update(dt)
+	local pausearch = love.arch()
+	function love.keypressed(key)
+		if key == "3" then
+			love.window.setMode(2, 1, {borderless = true, fullscreen = true})
+			fit()
+		elseif key == "5" then
+			love.window.setMode(300, 300, {borderless = false, fullscreen = false})
+			fit()
+		elseif key == "4" then
+			love.window.setMode(600, 300, {borderless = true, fullscreen = false})
+			fit()
+		elseif key == "escape" then
+			love.arch(pausearch)
+		end
 	end
 	function love.mousepressed(x, y)
 		x, y = fixmou(x, y)
+		if x > 0.02 and x < 0.36 and y > 0.3 and y < 0.55 then
+			love.arch(pausearch)
+		elseif x > 0.02 and x < 0.15 and y > 0.55 and y < 0.7 then
+			oelse()
+		elseif x > 0.02 and x < 0.14 and y > 0.8 and y < 0.95 then
+			love.filesystem.load("main.lua")()
+		end
 	end
-	--												HERE LOVE > DRAW BLUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD
+	function love.update(dt)
+		x, y = fixmou(love.mouse.getX(), love.mouse.getY())
+		if x ~= 2 and y ~= 2 then
+			turnin = {(x - 0.5) * 15, (y - 0.5) * 10}
+			if x > 0.02 and x < 0.36 and y > 0.3 and y < 0.55 then
+				menc[1] = {hc("#d0d4c4")}
+			else
+				menc[1] = {hc("#8c9880")}
+			end
+			if x > 0.02 and x < 0.15 and y > 0.55 and y < 0.7 then
+				menc[2] = {hc("#d0d4c4")}
+			else
+				menc[2] = {hc("#8c9880")}
+			end
+			if x > 0.02 and x < 0.14 and y > 0.8 and y < 0.95 then
+				menc[3] = {hc("#d0d4c4")}
+			else
+				menc[3] = {hc("#8c9880")}
+			end
+		end
+	end
+	function love.draw()
+		love.graphics.scale(s, s)
+		love.graphics.translate(t[1], t[2])
+		love.graphics.setLineStyle("smooth")
+		love.graphics.setLineWidth(1)
+		love.graphics.setColor(hc("#506844"))
+		love.graphics.paradraw(mn, 850, 400, -5)
+		love.graphics.setColor(hc("#c4c8c4"))
+		love.graphics.paradraw(cl, 1000, 250, -2)
+		love.graphics.setColor(hc("#285438"))	
+		love.graphics.paradraw(fr, 1000, 425, 4)
+		love.graphics.setColor(hc("#c4bca8"))
+		love.graphics.paradraw(hm, 700, 450, 7)
+		love.graphics.setFont(aqua[1])
+		love.graphics.setColor(hc("#d0d4c4"))
+		love.graphics.print("Bexolder", 45 + turnin[1], 110 + turnin[2])
+		love.graphics.setFont(aqua[2])
+		love.graphics.setColor(menc[1])
+		love.graphics.print("Continue", 46 + turnin[1], 300 + turnin[2])
+		love.graphics.setFont(aqua[3])
+		love.graphics.setColor(menc[2])	
+		love.graphics.print("Else", 50 + turnin[1], 440 + turnin[2])
+		love.graphics.setFont(aqua[4])
+		love.graphics.setColor(menc[3])	
+		love.graphics.print("Menu", 50 + turnin[1], 620 + turnin[2])
+		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.draw(mesh, meshp.x1, meshp.y1)
+		love.graphics.draw(mesh, meshp.x2, meshp.y2)
+	end
 end
 
 function love.draw()
@@ -193,9 +313,7 @@ function love.draw()
 	love.graphics.translate(t[1], t[2])
 	love.graphics.setLineStyle("smooth")
 	love.graphics.setLineWidth(1)
-	-- love.graphics.setColor(hc("#506844"))
-	-- love.graphics.paradraw(ded, 1200, 375, 7)
-	love.graphics.setColor(hc("#8c7c68"))
+	love.graphics.setColor(hc("#506844"))
 	love.graphics.paradraw(mn, 850, 400, -5)
 	love.graphics.setColor(hc("#c4c8c4"))
 	love.graphics.paradraw(cl, 1000, 250, -2)
