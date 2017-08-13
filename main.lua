@@ -1,16 +1,17 @@
 -- COPYRIGHT: KISELEV NIKOLAY
 -- Licence: MIT
 -- Bexolder
--- Version: 0.0.1.3
+-- Version: 0.0.1.4
 
 fur = {w = 1500, h = 750}
 turnin = {0, 0}
 if musicplay == nil then musicplay = true end
 
-Source = love.audio.newSource("mou/PACEFULL_NIGHT.mp3", "static")
-Source:setLooping(true)
+Source = love.audio.newSource("mus/PACEFULL_NIGHT.mp3", "static")
 if musicplay then
 	love.audio.play(Source)
+else
+	love.audio.stop(Source)
 end
 
 function love.arch(readyarch)
@@ -282,14 +283,11 @@ function pause()
 		love.graphics.translate(t[1], t[2])
 		love.graphics.setLineStyle("smooth")
 		love.graphics.setLineWidth(1)
-		love.graphics.setColor(hc("#506844"))
-		love.graphics.paradraw(mn, 850, 400, -5)
-		love.graphics.setColor(hc("#c4c8c4"))
-		love.graphics.paradraw(cl, 1000, 250, -2)
-		love.graphics.setColor(hc("#285438"))	
-		love.graphics.paradraw(fr, 1000, 425, 4)
-		love.graphics.setColor(hc("#c4bca8"))
-		love.graphics.paradraw(hm, 700, 450, 7)
+		love.graphics.setColor(hc("#303030"))
+		love.graphics.paradraw(mn, 850, 500, -5)
+		love.graphics.paradraw(cl, 1000, 350, -2)
+		love.graphics.paradraw(fr, 1000, 525, 4)
+		love.graphics.paradraw(hm, 700, 550, 7)
 		love.graphics.setFont(aqua[1])
 		love.graphics.setColor(hc("#d0d4c4"))
 		love.graphics.print("Bexolder", 45 + turnin[1], 110 + turnin[2])
@@ -314,13 +312,13 @@ function love.draw()
 	love.graphics.setLineStyle("smooth")
 	love.graphics.setLineWidth(1)
 	love.graphics.setColor(hc("#506844"))
-	love.graphics.paradraw(mn, 850, 400, -5)
+	love.graphics.paradraw(mn, 850, 500, -5)
 	love.graphics.setColor(hc("#c4c8c4"))
-	love.graphics.paradraw(cl, 1000, 250, -2)
+	love.graphics.paradraw(cl, 1000, 350, -2)
 	love.graphics.setColor(hc("#285438"))	
-	love.graphics.paradraw(fr, 1000, 425, 4)
+	love.graphics.paradraw(fr, 1000, 525, 4)
 	love.graphics.setColor(hc("#c4bca8"))
-	love.graphics.paradraw(hm, 700, 450, 7)
+	love.graphics.paradraw(hm, 700, 550, 7)
 	love.graphics.setFont(aqua[1])
 	love.graphics.setColor(hc("#d0d4c4"))
 	love.graphics.print("Bexolder", 45 + turnin[1], 110 + turnin[2])
